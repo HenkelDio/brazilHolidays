@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum HolidayCategory {
+  NATIONAL
+  STATE
+  CITY
+
+  @@map("holiday_category")
+}
+
+model Holiday {
+  id            String          @id @default(uuid()) @db.Uuid
+  title         String
+  description   String?
+  category      HolidayCategory
+  categoryColor String
+  state         String?
+
+  @@map("holidays")
+}
+
+model User {
+  id       String @id @default(uuid()) @db.Uuid
+  name     String
+  email    String @unique
+  password String
+
+  @@map("users")
+}
